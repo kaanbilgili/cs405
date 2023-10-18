@@ -1,0 +1,111 @@
+<head>
+    <title>CS 405 Week 2</title>
+    <link rel="stylesheet" type="text/css" href="hw1.css">
+</head>
+
+<body>
+
+    <svg id="view" width="1200" height="500" xmlns="http://www.w3.org/2000/svg">
+
+                <!--Lines of graph -->
+        <line x1="100" y1="450" x2="100" y2="25" stroke="black"  stroke-width="2" />
+        <line x1="100" y1="450" x2="150" y2="450" stroke="black" stroke-width="2" id="yearline"/>
+
+        <!--Lines for ticks-->
+
+        <line x1="100" y1="387.5" x2="95" y2="387.5" stroke="black" />
+        <line x1="100" y1="325" x2="95" y2="325" stroke="black" />
+        <line x1="100" y1="262.5" x2="95" y2="262.5" stroke="black" />
+        <line x1="100" y1="200" x2="95" y2="200" stroke="black" />
+        <line x1="100" y1="137.5" x2="95" y2="137.5" stroke="black" />
+        <line x1="100" y1="75" x2="95" y2="75" stroke="black" />
+
+        <!--Labels-->
+      
+        <text x="50" y="10" fill="black">(Number of Suicides)</text>
+
+        <text x="90" y="455" fill="black">0</text>
+        <text x="60" y="392.5" fill="black">1000</text>
+        <text x="60" y="330" fill="black">2000</text>
+        <text x="60" y="267.5" fill="black">3000</text>
+        <text x="60" y="205" fill="black">4000</text>
+        <text x="60" y="142.5" fill="black">5000</text>
+        <text x="60" y="80" fill="black">6000</text>
+
+
+      </svg>
+
+
+
+
+    <script>
+        const years = [
+            { year: 2004, value: 2707 },
+            { year: 2005, value: 2703 },
+            { year: 2006, value: 2829 },
+            { year: 2007, value: 2793 },
+            { year: 2008, value: 2816 },
+            { year: 2009, value: 2898 },
+            { year: 2010, value: 2933 },
+            { year: 2011, value: 2677 },
+            { year: 2012, value: 3287 },
+            { year: 2013, value: 3252 },
+            { year: 2014, value: 3169 },
+            { year: 2015, value: 3246 },
+            { year: 2016, value: 3193 },
+            { year: 2017, value: 3168 },
+            { year: 2018, value: 3342 },
+            { year: 2019, value: 3476 },
+            { year: 2020, value: 3710 },
+            { year: 2021, value: 4194 },
+            { year: 2022, value: 4146 },
+            ];
+        const view = document.getElementById("view");  
+        const yline = document.getElementById("yearline");  
+
+        function createBar(xpos, height) {
+            const bar = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            bar.setAttribute("x", xpos);
+            bar.setAttribute("y", 450-height);
+            bar.setAttribute("width", 30);
+            bar.setAttribute("height", height);
+            bar.setAttribute("fill", "#5c7fff");
+            return bar;
+        }
+
+        years.forEach((year, index) => {
+            view.appendChild(
+            createBar(
+            (100+(index+1)*20 + index*30),
+            (year.value /16),
+            )
+        );});
+
+        years.forEach((year, index) => {
+            const yeartext = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            yeartext.setAttribute("x", (100+(index+1)*20 + index*30)),
+            yeartext.setAttribute("y", 465),
+            yeartext.textContent = year.year,
+            view.appendChild(yeartext);
+
+            const tick = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            tick.setAttribute("stroke", "black")
+            tick.setAttribute("x1", (110+(index+1)*50)),
+            tick.setAttribute("x2", (110+(index+1)*50)),
+            tick.setAttribute("y1", 450),
+            tick.setAttribute("y2", 455),
+            view.appendChild(tick);
+
+            const valuetext = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            const xvalue = (120+(index+1)*20 + index*30)
+            valuetext.setAttribute("x", (110+(index+1)*20 + index*30)),
+            valuetext.setAttribute("y", 435),
+            valuetext.setAttribute("transform", `rotate(270 ${xvalue} 435)`),
+            valuetext.textContent = year.value,
+            view.appendChild(valuetext);
+
+            yline.setAttribute("x2", 160+index*50);
+        });
+    </script>
+
+</body>
